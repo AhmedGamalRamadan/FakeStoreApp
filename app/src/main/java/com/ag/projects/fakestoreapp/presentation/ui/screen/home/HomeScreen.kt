@@ -1,6 +1,5 @@
 package com.ag.projects.fakestoreapp.presentation.ui.screen.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
@@ -25,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.ag.projects.fakestoreapp.presentation.ui.components.CategoryTabRow
 import com.ag.projects.fakestoreapp.presentation.ui.components.FakeStoreTopAppBar
@@ -35,7 +34,6 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalFoundationApi::class
 )
 @Composable
 fun HomeScreen(
@@ -44,7 +42,7 @@ fun HomeScreen(
 ) {
 
     val viewModel: HomeScreenViewModel = getViewModel()
-    val productsResponse by viewModel.products.collectAsState()
+    val productsResponse by viewModel.products.collectAsStateWithLifecycle()
 
     val scrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
 

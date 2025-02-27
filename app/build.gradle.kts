@@ -59,6 +59,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Lifecycle utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
     // koin
     implementation("io.insert-koin:koin-android:3.2.0-beta-1")
     implementation("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
@@ -81,4 +84,7 @@ dependencies {
 
     // Extended Icons
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
+
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 }
