@@ -13,13 +13,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.ag.projects.fakestoreapp.presentation.ui.components.RatingBar
 import com.ag.projects.fakestoreapp.utils.Result
@@ -28,13 +27,12 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun DetailsScreen(
     modifier: Modifier = Modifier,
-    backStackEntry: NavBackStackEntry
+    productId: Int
 ) {
 
     val viewModel: DetailsScreenViewModel = getViewModel()
-    val productState by viewModel.product.collectAsState()
+    val productState by viewModel.product.collectAsStateWithLifecycle()
 
-    val productId = backStackEntry.arguments?.getInt("id")
 
     LaunchedEffect(productId) {
         productId?.let { id ->

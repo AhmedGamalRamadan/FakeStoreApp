@@ -10,7 +10,6 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
-import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -22,7 +21,7 @@ class RemoteProductsRepositoryImpl(
         return flow {
             try {
                 val data: HttpResponse =
-                    httpClient.get("https://fakestoreapi.com/products")
+                    httpClient.get("${Constants.BASE_URL}${Constants.PRODUCTS_ENDPOINT}")
                 val responseBody = data.bodyAsText()
 
                 if (responseBody.isBlank()) {
@@ -43,7 +42,7 @@ class RemoteProductsRepositoryImpl(
             try {
                 val data: HttpResponse =
                     httpClient.get(
-                        "https://fakestoreapi.com/products/category/$category"
+                        "${Constants.BASE_URL}${Constants.PRODUCTS_ENDPOINT}/${Constants.CATEGORY}/$category"
                     )
 
                 val responseBody = data.bodyAsText()
@@ -63,17 +62,17 @@ class RemoteProductsRepositoryImpl(
 
     override suspend fun getProductById(productId: Int): Result<ProductsResponseItem> {
         return try {
-            val data :HttpResponse = httpClient.get(
-                "https://fakestoreapi.com/products/$productId"
+            val data: HttpResponse = httpClient.get(
+                "${Constants.BASE_URL}${Constants.PRODUCTS_ENDPOINT}/$productId"
             )
 
-            if (data.bodyAsText().isBlank()){
+            if (data.bodyAsText().isBlank()) {
                 return Result.Error("Empty response from server")
             }
             Result.Success(data.body())
 
-        }catch (e:Exception){
-            Result.Error(e.message.toString(),e)
+        } catch (e: Exception) {
+            Result.Error(e.message.toString(), e)
         }
     }
 }

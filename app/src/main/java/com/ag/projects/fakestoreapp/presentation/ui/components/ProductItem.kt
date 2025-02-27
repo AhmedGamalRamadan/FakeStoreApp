@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.ag.projects.fakestoreapp.R
 import com.ag.projects.fakestoreapp.domain.model.ProductsResponseItem
+import com.ag.projects.fakestoreapp.utils.Screen
 
 @Composable
 fun ProductItem(
@@ -40,10 +41,12 @@ fun ProductItem(
             .width(200.dp)
             .padding(8.dp)
             .clickable {
-                navHostController.navigate("details/${product.id}")
+                product.id?.let { id ->
+                    navHostController.navigate(Screen.Details(id))
+                }
             },
         shape = RoundedCornerShape(7.dp),
-        colors  = CardDefaults.cardColors(
+        colors = CardDefaults.cardColors(
             containerColor = Color.White
         )
     ) {
