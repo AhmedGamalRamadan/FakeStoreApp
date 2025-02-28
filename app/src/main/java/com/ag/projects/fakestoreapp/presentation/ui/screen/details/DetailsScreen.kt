@@ -1,5 +1,9 @@
 package com.ag.projects.fakestoreapp.presentation.ui.screen.details
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,10 +30,12 @@ import com.ag.projects.fakestoreapp.presentation.ui.components.RatingBar
 import com.ag.projects.fakestoreapp.utils.Result
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun DetailsScreen(
+fun SharedTransitionScope.DetailsScreen(
     modifier: Modifier = Modifier,
-    productId: Int
+    productId: Int,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
 
     val viewModel: DetailsScreenViewModel = getViewModel()
@@ -80,6 +86,13 @@ fun DetailsScreen(
                         .fillMaxWidth()
                         .height(230.dp)
                         .padding(8.dp)
+                        .sharedElement(
+                            state = rememberSharedContentState("${product.image}"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ ->
+                                tween(1000)
+                            }
+                        ),
                 )
 
                 MediumSpacerHeight()
@@ -95,6 +108,13 @@ fun DetailsScreen(
                             textAlign = TextAlign.Start,
                             modifier = modifier
                                 .weight(1f)
+                                .sharedElement(
+                                    state = rememberSharedContentState("${product.title}"),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    boundsTransform = { _, _ ->
+                                        tween(1000)
+                                    }
+                                )
                         )
                     }
 
@@ -105,6 +125,13 @@ fun DetailsScreen(
                             color = Color.Green,
                             modifier = modifier
                                 .padding(4.dp)
+                                .sharedElement(
+                                    state = rememberSharedContentState("${product.price}"),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    boundsTransform = { _, _ ->
+                                        tween(1000)
+                                    }
+                                )
                         )
                     }
                 }
@@ -119,7 +146,7 @@ fun DetailsScreen(
                 product.description?.let {
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
 

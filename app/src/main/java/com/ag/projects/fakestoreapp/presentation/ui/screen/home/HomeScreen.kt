@@ -1,5 +1,8 @@
 package com.ag.projects.fakestoreapp.presentation.ui.screen.home
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,11 +37,13 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(
     ExperimentalMaterial3Api::class,
+    ExperimentalSharedTransitionApi::class,
 )
 @Composable
-fun HomeScreen(
+fun SharedTransitionScope.HomeScreen(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
 
     val viewModel: HomeScreenViewModel = getViewModel()
@@ -128,7 +133,8 @@ fun HomeScreen(
                             items(products) { product ->
                                 ProductItem(
                                     product = product,
-                                    navHostController = navHostController
+                                    navHostController = navHostController,
+                                    animatedVisibilityScope = animatedVisibilityScope
                                 )
                             }
                         }

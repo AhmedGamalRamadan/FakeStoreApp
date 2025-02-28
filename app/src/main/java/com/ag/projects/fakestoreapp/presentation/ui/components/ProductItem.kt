@@ -1,5 +1,10 @@
 package com.ag.projects.fakestoreapp.presentation.ui.components
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.BoundsTransform
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,11 +30,13 @@ import com.ag.projects.fakestoreapp.R
 import com.ag.projects.fakestoreapp.domain.model.ProductsResponseItem
 import com.ag.projects.fakestoreapp.utils.Screen
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun ProductItem(
+fun SharedTransitionScope.ProductItem(
     modifier: Modifier = Modifier,
     product: ProductsResponseItem,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
 
     Card(
@@ -57,7 +64,14 @@ fun ProductItem(
                 contentDescription = product.title,
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(80.dp),
+                    .height(80.dp)
+                    .sharedElement(
+                        state = rememberSharedContentState("${product.image}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = { _, _ ->
+                            tween(1000)
+                        }
+                    ),
                 placeholder = painterResource(R.drawable.ic_launcher_background)
             )
 
@@ -68,7 +82,15 @@ fun ProductItem(
                     text = it,
                     fontSize = 14.sp,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = modifier
+                        .sharedElement(
+                        state = rememberSharedContentState("${product.title}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = { _, _ ->
+                            tween(1000)
+                        }
+                    )
                 )
             }
 
@@ -78,7 +100,15 @@ fun ProductItem(
                 Text(
                     text = "$it $",
                     fontSize = 18.sp,
-                    color = Color.Green
+                    color = Color.Green,
+                    modifier = modifier
+                        .sharedElement(
+                            state = rememberSharedContentState("${product.price}"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ ->
+                                tween(1000)
+                            }
+                        )
                 )
             }
 
