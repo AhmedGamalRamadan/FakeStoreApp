@@ -1,7 +1,6 @@
 package com.ag.projects.fakestoreapp.presentation.ui.components
 
 import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.BoundsTransform
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -51,7 +51,10 @@ fun SharedTransitionScope.ProductItem(
             },
         shape = RoundedCornerShape(7.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.background
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp
         )
     ) {
         Column(
@@ -66,7 +69,7 @@ fun SharedTransitionScope.ProductItem(
                     .fillMaxWidth()
                     .height(80.dp)
                     .sharedElement(
-                        state = rememberSharedContentState("${product.image}"),
+                        state = rememberSharedContentState("image/${product.image}"),
                         animatedVisibilityScope = animatedVisibilityScope,
                         boundsTransform = { _, _ ->
                             tween(1000)
@@ -85,7 +88,7 @@ fun SharedTransitionScope.ProductItem(
                     overflow = TextOverflow.Ellipsis,
                     modifier = modifier
                         .sharedElement(
-                        state = rememberSharedContentState("${product.title}"),
+                        state = rememberSharedContentState("title/${product.title}"),
                         animatedVisibilityScope = animatedVisibilityScope,
                         boundsTransform = { _, _ ->
                             tween(1000)
@@ -103,7 +106,7 @@ fun SharedTransitionScope.ProductItem(
                     color = Color.Green,
                     modifier = modifier
                         .sharedElement(
-                            state = rememberSharedContentState("${product.price}"),
+                            state = rememberSharedContentState("price/${product.price}"),
                             animatedVisibilityScope = animatedVisibilityScope,
                             boundsTransform = { _, _ ->
                                 tween(1000)

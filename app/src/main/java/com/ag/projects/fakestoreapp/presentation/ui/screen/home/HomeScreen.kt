@@ -43,14 +43,15 @@ import org.koin.androidx.compose.getViewModel
 fun SharedTransitionScope.HomeScreen(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
-    animatedVisibilityScope: AnimatedVisibilityScope
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    darkTheme: Boolean,
+    onThemeUpdated: () -> Unit
 ) {
 
     val viewModel: HomeScreenViewModel = getViewModel()
     val productsResponse by viewModel.products.collectAsStateWithLifecycle()
 
     val scrollBehaviour = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
 
     val categories = listOf(
         "All",
@@ -77,7 +78,9 @@ fun SharedTransitionScope.HomeScreen(
         topBar = {
             FakeStoreTopAppBar(
                 modifier = modifier,
-                scrollBehavior = scrollBehaviour
+                scrollBehavior = scrollBehaviour,
+                darkTheme = darkTheme,
+                onThemeUpdated = { onThemeUpdated() }
             )
         }
     ) { innerPadding ->

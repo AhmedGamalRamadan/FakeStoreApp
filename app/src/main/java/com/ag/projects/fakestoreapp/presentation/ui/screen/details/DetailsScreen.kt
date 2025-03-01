@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,7 +42,6 @@ fun SharedTransitionScope.DetailsScreen(
     val viewModel: DetailsScreenViewModel = getViewModel()
     val productState by viewModel.product.collectAsStateWithLifecycle()
 
-
     LaunchedEffect(productId) {
         productId?.let { id ->
             viewModel.getProductById(id)
@@ -74,8 +74,8 @@ fun SharedTransitionScope.DetailsScreen(
             Column(
                 modifier = modifier
                     .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
                     .padding(12.dp)
-
             ) {
                 MediumSpacerHeight()
 
@@ -87,7 +87,7 @@ fun SharedTransitionScope.DetailsScreen(
                         .height(230.dp)
                         .padding(8.dp)
                         .sharedElement(
-                            state = rememberSharedContentState("${product.image}"),
+                            state = rememberSharedContentState("image/${product.image}"),
                             animatedVisibilityScope = animatedVisibilityScope,
                             boundsTransform = { _, _ ->
                                 tween(1000)
@@ -106,10 +106,11 @@ fun SharedTransitionScope.DetailsScreen(
                             text = it,
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = TextAlign.Start,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = modifier
                                 .weight(1f)
                                 .sharedElement(
-                                    state = rememberSharedContentState("${product.title}"),
+                                    state = rememberSharedContentState("title/${product.title}"),
                                     animatedVisibilityScope = animatedVisibilityScope,
                                     boundsTransform = { _, _ ->
                                         tween(1000)
@@ -126,7 +127,7 @@ fun SharedTransitionScope.DetailsScreen(
                             modifier = modifier
                                 .padding(4.dp)
                                 .sharedElement(
-                                    state = rememberSharedContentState("${product.price}"),
+                                    state = rememberSharedContentState("price/${product.price}"),
                                     animatedVisibilityScope = animatedVisibilityScope,
                                     boundsTransform = { _, _ ->
                                         tween(1000)
@@ -141,12 +142,14 @@ fun SharedTransitionScope.DetailsScreen(
                 Text(
                     text = "Description:",
                     style = MaterialTheme.typography.titleLarge,
-                )
+                    color = MaterialTheme.colorScheme.primary,
+                    )
 
                 product.description?.let {
                     Text(
                         text = it,
                         style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
 
@@ -155,6 +158,7 @@ fun SharedTransitionScope.DetailsScreen(
                 Text(
                     text = "Rate",
                     style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 product.rating?.rate?.let {

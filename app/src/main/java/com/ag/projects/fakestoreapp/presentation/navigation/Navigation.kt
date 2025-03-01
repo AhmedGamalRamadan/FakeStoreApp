@@ -14,7 +14,11 @@ import com.ag.projects.fakestoreapp.utils.Screen
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun Navigation(modifier: Modifier = Modifier) {
+fun Navigation(
+    modifier: Modifier = Modifier,
+    darkTheme: Boolean,
+    onThemeUpdated: () -> Unit
+) {
 
     val navController = rememberNavController()
 
@@ -28,7 +32,9 @@ fun Navigation(modifier: Modifier = Modifier) {
             composable<Screen.Home> {
                 HomeScreen(
                     navHostController = navController,
-                    animatedVisibilityScope = this
+                    animatedVisibilityScope = this,
+                    darkTheme = darkTheme,
+                    onThemeUpdated = { onThemeUpdated() }
                 )
             }
 
@@ -41,5 +47,4 @@ fun Navigation(modifier: Modifier = Modifier) {
             }
         }
     }
-
 }

@@ -23,7 +23,8 @@ fun CategoryTabRow(
     ScrollableTabRow(
         selectedTabIndex = pagerState.currentPage,
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        containerColor = MaterialTheme.colorScheme.background
         ) {
 
         categories.forEachIndexed { index, category ->
