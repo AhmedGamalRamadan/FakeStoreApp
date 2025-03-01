@@ -1,7 +1,7 @@
 # Fake Store App  
 
 ## Overview  
-Jewelry Store is an Android app built with **Jetpack Compose** and **MVVM** architecture. It fetches products from [FakeStore API](https://fakestoreapi.com/) and provides a smooth user experience with animations and transitions.  
+Fake Store is an Android app built with **Jetpack Compose** and **MVVM** architecture. It fetches products from [FakeStore API](https://fakestoreapi.com/) and provides a smooth user experience with animations and transitions.  
 
 ## Architecture block diagram
 ![Android Architecture](https://github.com/lofcoding/AndroidArchitectureSample/assets/109604722/ed29d956-1154-4518-9107-e4e1a34b4a35)
